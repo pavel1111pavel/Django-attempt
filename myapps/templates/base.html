@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modal-custom-styles.css' %}">
+
+
+
+
+    <!-- Подключение jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Подключение jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
+
+    <!-- Подключение стилей для SweetAlert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Подключение Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <!-- Подключение SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</head>
+<body>
+  <div class="container">
+    <header>
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Логотип">
+            </a>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="{% url 'about' %}">О нас</a></li>
+                <li><a href="#advantages">Наши преимущества</a></li>
+                <li><a href="#pricing">Стоимость</a></li>
+                {% if user.is_authenticated %}
+                    {% if user.is_teacher %}
+                        <li><a href="{% url 'teacher_room' %}">Личный кабинет учителя</a></li>
+                    {% else %}
+                        <li><a href="{% url 'student_room' %}">Личный кабинет ученика</a></li>
+                    {% endif %}
+                {% else %}
+                    <li>
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{% url 'login' %}">
+                            <button type="submit" class="btn">Вход</button>
+                        </form>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="block">
+            <h2>Контакты</h2>
+            <p>Здесь можно добавить контактную информацию и ссылки.</p>
+        </div>
+    </footer>
+  </div>
+
+    <script>
+        $(document).ready(function() {
+            // Расположение кнопок в хедере
+            var logoWidth = $('.logo').outerWidth();
+            var menuWidth = $('.menu').outerWidth();
+            var buttonsWidth = menuWidth - logoWidth;
+
+            $('.menu').css('width', buttonsWidth);
+        });
+    </script>
+
+<!-- JavaScript код -->
+<script>
+    // Отображение модального окна
+    function showModal(message) {
+        $('#success-message').text(message);
+        $('#success-modal').css('display', 'block');
+    }
+
+    // Закрытие модального окна
+    function closeModal() {
+        $('#success-modal').css('display', 'none');
+    }
+
+    // Закрытие модального окна при клике на крестик
+    $('.close').click(function() {
+        closeModal();
+    });
+
+    // Закрытие модального окна при клике на кнопку "OK"
+    $('#ok-button').click(function() {
+        closeModal();
+    });
+
+    // Обработка успешного ответа после отправки задачи
+    handleSuccess({"success": true, "message":  "Задача успешно отправлена."});
+</script>
+
+{% block extra_scripts %}
+<script>
+    // Отображение модального окна
+    function showModal(message) {
+        $('#success-message').text(message);
+        $('#success-modal').css('display', 'block');
+    }
+
+    // Закрытие модального окна
+    function closeModal() {
+        $('#success-modal').css('display', 'none');
+    }
+
+    // Закрытие модального окна при клике на крестик
+    $('.close').click(function() {
+        closeModal();
+    });
+
+    // Закрытие модального окна при клике на кнопку "OK"
+    $('#ok-button').click(function() {
+        closeModal();
+    });
+
+    // Обработка успешного ответа после отправки задачи
+    function handleSuccess(response) {
+        if (response.success) {
+            showModal(response.message);
+        }
+    }
+</script>
+{% endblock %}
+</body>
+</html>

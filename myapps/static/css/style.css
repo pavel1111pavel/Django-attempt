@@ -1,0 +1,162 @@
+body {
+  font-family: Arial, sans-serif;
+  color: #333333;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+#about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Align items vertically */
+}
+
+header {
+  background-color: #f2f2f2;
+  padding: 10px;
+  height: 10vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-bottom: 10px;
+  flex: 0 0 auto;
+  height: calc(100% - 10px);
+}
+
+.logo img {
+  max-height: 100%;
+  width: auto;
+}
+nav ul {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+nav ul li {
+  margin-left: 10px;
+}
+
+nav ul li:first-child {
+  margin-left: auto;
+}
+
+nav ul li a {
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: #000;
+  white-space: nowrap; /* Запретить перенос слов */
+  display: flex; /* Разместить содержимое кнопки горизонтально */
+  align-items: center; /* Выравнивание содержимого по вертикали */
+}
+
+nav ul li a:hover {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.interactive-blocks {
+  display: flex;
+  flex-direction: column; /* Set flex-direction to column */
+  justify-content: center;
+  align-items: center; /* Align items to the center */
+}
+
+.interactive-block {
+  width: 300px;
+  margin: 20px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.interactive-block.show {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.interactive-block img {
+  width: 100%;
+  max-width: 300px;
+}
+
+.interactive-block h3 {
+  margin-top: 10px;
+}
+
+.interactive-block p {
+  margin-top: 5px;
+}
+
+/* CSS стили для футера */
+footer {
+  background-color: #f2f2f2;
+  padding: 20px;
+  color: #333333;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.block {
+  margin-bottom: 20px;
+}
+
+/* CSS стили для блоков со случайными стихами и цифрами */
+.random-block {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: #333333;
+}
+
+.random-block p {
+  margin: 10px 0;
+}
+
+.random-block.random-color-1 {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.random-block.random-color-2 {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.random-block.random-color-3 {
+  background-color: #2ecc71;
+  color: #ffffff;
+}
+
+.random-block.random-color-4 {
+  background-color: #f1c40f;
+  color: #333333;
+}
+
+.random-block.random-color-5 {
+  background-color: #9b59b6;
+  color: #ffffff;
+}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Личный кабинет преподавателя{% endblock %}
+
+{% block content %}
+<h2>Поданные задачи от учеников</h2>
+{% for task in submitted_tasks %}
+    <div class="task">
+        <h3>{{ task.student_name }}</h3>
+        <p>{{ task.task_content }}</p>
+        <form action="{% url 'teacher_room' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <button type="submit">Принять задачу</button>
+        </form>
+    </div>
+{% empty %}
+    <p>Нет поданных задач от учеников</p>
+{% endfor %}
+
+<h2>Принятые задачи и ставшие уроками</h2>
+{% for lesson in lessons %}
+    <div class="task">
+        <h3>{{ lesson.task.student_name }}</h3>
+        <p>{{ lesson.task.task_content }}</p>
+        <span>Задача принята</span>
+    </div>
+{% empty %}
+    <p>Нет принятых задач</p>
+{% endfor %}
+
+<h2>Текущие занятия, уроки и сообщения от учеников</h2>
+{% for lesson in lessons %}
+    <div class="lesson">
+        <h3>{{ lesson.task.student_name }}</h3>
+        <p>{{ lesson.task.task_content }}</p>
+        <!-- Дополнительные детали урока, сообщения от учеников и т.д. -->
+    </div>
+{% empty %}
+    <p>Нет текущих занятий</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h1>Вход</h1>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'home' %}'">Домой</button>
+            </form>
+            <p>Еще не зарегистрированы? <a href="{% url 'registration_page' %}">Регистрация</a></p>
+        </div>
+    </div>
+</body>
+</html>

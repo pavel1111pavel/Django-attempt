@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О нас{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <!-- Кнопка "Выйти" и сброс токена -->
+  <form id="logout-form" method="post" action="{% url 'logout' %}?next={% url 'home' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="padding: 10px 20px; background-color: #e74c3c; color: #fff; text-decoration: none; border-radius: 5px;">Выйти</button>
+  </form>
+{% endif %}
+
+
+
+<section id="about">
+  <div class="block">
+    <h2>О нас</h2>
+    <p>Здесь можно добавить описание о вашей компании или проекте.</p>
+  </div>
+
+  <section class="interactive-blocks">
+    <div class="interactive-block">
+      <img src="{% static 'images/photo1.png' %}" alt="Фото 1">
+      <h3>Заголовок 1</h3>
+      <p>Описание или дополнительная информация о фото или блоке.</p>
+    </div>
+
+    <div class="interactive-block">
+      <img src="{% static 'images/photo2.png' %}" alt="Фото 2">
+      <h3>Заголовок 2</h3>
+      <p>Описание или дополнительная информация о фото или блоке.</p>
+    </div>
+
+    <div class="interactive-block">
+      <img src="{% static 'images/photo3.png' %}" alt="Фото 3">
+      <h3>Заголовок 3</h3>
+      <p>Описание или дополнительная информация о фото или блоке.</p>
+    </div>
+
+    <div class="interactive-block">
+      <img src="{% static 'images/photo3.png' %}" alt="Фото 3">
+      <h3>Заголовок 3</h3>
+      <p>Описание или дополнительная информация о фото или блоке.</p>
+    </div>
+
+    <div class="interactive-block">
+      <img src="{% static 'images/photo3.png' %}" alt="Фото 3">
+      <h3>Заголовок 3</h3>
+      <p>Описание или дополнительная информация о фото или блоке.</p>
+    </div>
+  </section>
+</section>
+
+//<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+var csrftoken = getCookie('csrftoken');
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    // Удаление CSRF-токена из cookies
+    document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+    // Сброс аутентификации и перенаправление на страницу выхода из системы
+    fetch('{% url 'logout' %}', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      }
+    }).then(function(response) {
+      if (response.ok) {
+        // Действия после успешного выхода из системы
+        alert('Вы успешно вышли из системы.');
+        // Обновление страницы
+        location.reload();
+      } else {
+        // Действия при ошибке выхода из системы
+        alert('Произошла ошибка при выходе из системы.');
+      }
+    }).catch(function(error) {
+      // Обработка ошибки
+      console.log(error);
+    });
+  });
+</script>
+<script>
+$(document).ready(function() {
+  // Получаем все интерактивные блоки
+  const interactiveBlocks = $('.interactive-block');
+
+  // Функция для показа блоков с задержкой
+  function showBlocks() {
+    interactiveBlocks.each(function(index, block) {
+      const windowHeight = $(window).height();
+      const blockTop = $(block).offset().top;
+
+    // Вычисляем долю, насколько близко блок к верхней трети окна
+      const visibilityFactor = (blockTop - windowHeight) / (windowHeight / 4);
+
+    // Вычисляем задержку в миллисекундах
+      const delay = visibilityFactor * 3000;
+
+    // Показываем блок с задержкой
+      setTimeout(function() {
+       $(block).addClass('show'); // Updated class name to 'show'
+    }, delay);
+  });
+}
+
+
+  // Вызываем функцию показа блоков после заданной задержки (например, через 2 секунды)
+  setTimeout(showBlocks, 1000);
+
+  // Функция для показа блоков при прокрутке
+  function showBlocksOnScroll() {
+    interactiveBlocks.each(function(index, block) {
+      const windowHeight = $(window).height();
+      const blockTop = $(block).offset().top;
+
+      // Проверяем, видим ли блок в окне браузера
+      if (blockTop < windowHeight) {
+        $(block).addClass('fade-in');
+      }
+    });
+  }
+
+  // Вызываем функцию показа блоков при загрузке страницы
+  showBlocksOnScroll();
+
+  // Вызываем функцию показа блоков при прокрутке страницы
+  $(window).scroll(showBlocksOnScroll);
+});
+
+</script>
+{% endblock %}

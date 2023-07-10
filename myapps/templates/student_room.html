@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О нас{% endblock %}
+
+{% block content %}
+<div class="teacher-selection">
+    <label for="teacher-select">Выберите преподавателя:</label>
+    <form id="task-form" action="{% url 'student_room' %}" method="POST">
+        {% csrf_token %}
+        <select id="teacher-select" name="teacher_id">
+            {% for teacher in teachers %}
+                <option value="{{ teacher.user_id }}">{{ teacher.teacher_name }} - {{ teacher.about }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="form-group">
+            <label for="task-content">Задача:</label>
+            <textarea id="task-content" name="task_content" rows="4" cols="150" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+
+<!-- Modal -->
+<div id="success-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="success-message"></p>
+        <button id="ok-button" class="btn btn-primary">OK</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+
+
+{% endblock %}

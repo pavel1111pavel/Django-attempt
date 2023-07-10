@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome, {{ teacher.teacher_name }}!</h1>
+
+<h2>Lessons for the Week:</h2>
+<ul>
+    {% for lesson in lessons %}
+    <li>{{ lesson.title }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Messages from Students:</h2>
+<ul>
+    {% for message in messages %}
+    <li>{{ message.student.name }} - {{ message.message }}</li>
+    {% endfor %}
+</ul>
